@@ -18,7 +18,7 @@ In this project, you'll be creating a frontend that graphically displays train i
 
 Create a 0.5-2 minute demo video to showcase your project's functionality (this is just so that we don't have to go through and install dependencies / deal with versioning errors for every single exercise, we're still gonna look at your code)!
 
-- **Due Date**: 10-9-25
+- **Due Date**: 10-14-25
 
 ## Instructions
 
