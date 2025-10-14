@@ -1,10 +1,7 @@
 import React from "react";
 import "./TrainList.css";
 
-type Props = {
-  color: string;
-  data: any[];
-};
+type Props = { color: string; data: any[] };
 
 export default function TrainList({ color, data }: Props) {
   return (

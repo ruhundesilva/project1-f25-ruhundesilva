@@ -1,16 +1,16 @@
 import React from "react";
-import './NavBar.css'
+import "./NavBar.css";
 
-type Props = {
-  color: string;
-  data: any[];
-};
+type Props = { color: string; data: any[] };
 
-export default function NavBar({ color, data }: Props) {
+export default function NavBar({ color }: Props) {
   return (
     <aside className="navbar">
-      <div className="navbar-header">Select Starting Station</div>
-      <div className="navbar-subtitle">({color.toUpperCase()} line)</div>
+      <div className="nav-inner">
+        <div className="nav-caption">Select your starting station</div>
+        <div className="nav-subtle">({color.toUpperCase()} line)</div>
+        <div className="nav-blank" />
+      </div>
     </aside>
   );
 }

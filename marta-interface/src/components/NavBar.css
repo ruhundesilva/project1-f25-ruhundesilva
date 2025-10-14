@@ -1,19 +1,28 @@
+
 .navbar {
-    background: #222;
-    color: #eee;
-    padding: 12px;
-    border-radius: 8px;
+  background: #282828;
+  color: #f0f0f0;
+  height: 100%;
+  border-right: 1px solid #202020;
 }
 
-.navbar-header {
-    opacity: 0.8;
-    margin-bottom: 8px;
-    font-weight: 600;
+.nav-inner {
+  padding: 18px 16px;
 }
 
-.navbar-subtitle {
-    border-top: 1px solid #555;
-    padding-top: 8px;
-    font-style: italic;
-    font-size: 0.9rem;
+.nav-caption {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 8px;
+}
+
+.nav-subtle {
+  font-size: 13px;
+  opacity: 0.75;
+  margin-bottom: 12px;
+}
+
+.nav-blank {
+  height: 520px;
+  background: transparent;
 }

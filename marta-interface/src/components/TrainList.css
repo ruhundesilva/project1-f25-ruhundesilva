@@ -1,0 +1,16 @@
+.trainlist {
+  padding: 16px;
+  background: #ffffff;
+}
+
+.trainlist-header {
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.trainlist-placeholder {
+  border: 1px dashed #cfcfcf;
+  background: #fafafa;
+  padding: 18px;
+  border-radius: 8px;
+}
