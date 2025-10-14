@@ -1,0 +1,19 @@
+.navbar {
+    background: #222;
+    color: #eee;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.navbar-header {
+    opacity: 0.8;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.navbar-subtitle {
+    border-top: 1px solid #555;
+    padding-top: 8px;
+    font-style: italic;
+    font-size: 0.9rem;
+}
