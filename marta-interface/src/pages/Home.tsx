@@ -5,37 +5,33 @@ import "./Home.css";
 
 export default function Home() {
   return (
-    <div className="home-container">
-      <header className="home-header">
-        <h1 className="home-title">MARTA</h1>
-        <Link to="/about" className="home-about">
-          About MARTA
-        </Link>
+    <div className="home">
+      <header className="home__header">
+        <div aria-hidden className="home__spacer" />
+        <h1 className="home__brand">MARTA</h1>
+        <Link to="/about" className="home__about">About MARTA</Link>
       </header>
 
-      <main className="home-main">
-        <section className="home-left">
-          <h2>VIEW ROUTES SCHEDULE</h2>
-          <ul className="home-lines">
-            <li>
-              <Link to="/lines?color=gold">Gold Line</Link>
-            </li>
-            <li>
-              <Link to="/lines?color=red">Red Line</Link>
-            </li>
-            <li>
-              <Link to="/lines?color=green">Green Line</Link>
-            </li>
-            <li>
-              <Link to="/lines?color=blue">Blue Line</Link>
-            </li>
+      <main className="home__main">
+        <section className="home__left">
+          <h2 className="home__subtitle">VIEW ROUTES SCHEDULE</h2>
+          <ul className="home__lines">
+            <li><Link to="/lines?color=gold">Gold Line</Link></li>
+            <li><Link to="/lines?color=red">Red Line</Link></li>
+            <li><Link to="/lines?color=green">Green Line</Link></li>
+            <li><Link to="/lines?color=blue">Blue Line</Link></li>
           </ul>
         </section>
 
-        <section className="home-right">
-          <img src={trainImg} alt="MARTA train" className="train-image" />
+        <section className="home__right">
+          <img
+            src={trainImg}
+            alt="MARTA train on the guideway"
+            className="home__image"
+          />
         </section>
       </main>
     </div>
   );
 }
+
