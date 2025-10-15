@@ -8,12 +8,6 @@ import LinesPage from "./pages/LinesPage";
 function App() {
   return (
     <BrowserRouter>
-      <div className="nav-bar">
-        <Link to="/">Home</Link>
-        <Link to="/lines">Lines</Link>
-        <Link to="/about">About</Link>
-      </div>
-
       <Routes>
         <Route path="/" Component={Home} />
         <Route path="/lines" Component={LinesPage} />
