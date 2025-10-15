@@ -4,20 +4,23 @@
 }
 
 .filter-bar {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  margin: 8px 0 12px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+  margin: 8px 0 14px;
 }
 
 .chip {
   appearance: none;
   border: 1px solid #bbb;
   background: #fff;
-  padding: 6px 12px;
+  padding: 10px 12px;
   border-radius: 16px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
+  text-align: center;
+  width: 100%;
 }
 
 .train-list {
@@ -33,7 +36,7 @@
 }
 
 .chip.active {
-  background: #222;
+  background: #111;
   color: #fff;
-  border-color: #222;
+  border-color: #111;
 }

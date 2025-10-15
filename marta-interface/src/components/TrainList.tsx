@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import "./TrainList.css";
 import Train, { type TrainRecord } from "./Train";
 
@@ -8,87 +8,102 @@ type Props = {
 };
 
 export default function TrainList({ color, data }: Props) {
-  let trains: TrainRecord[] = Array.isArray(data)
+  const trains: TrainRecord[] = Array.isArray(data)
     ? (data as TrainRecord[])
     : [];
 
   const [showArriving, setShowArriving] = useState(false);
   const [showScheduled, setShowScheduled] = useState(false);
-  const [direction, setDirection] = useState<string | null>(null);
+  const [direction, setDirection] = useState<null | "A" | "B">(null);
 
-  const isArriving = (t: TrainRecord) =>
-    (t.WAITING_TIME ?? "").toLowerCase().includes("arriv") ||
-    (t.WAITING_TIME ?? "").toLowerCase().includes("board");
+  const isArriving = (t: TrainRecord) => {
+    const w = (t.WAITING_TIME ?? "").toLowerCase().trim();
+    return (
+      w.includes("arriv") || w.includes("board") || w === "0" || w === "0 min"
+    );
+  };
+  const isScheduled = (t: TrainRecord) => !isArriving(t);
 
-  const isNorthOrEast = (t: TrainRecord) =>
-    (t.DIRECTION ?? "")
-      .toLowerCase()
-      .includes(color === "green" || color === "blue" ? "east" : "north");
+  const normDir = (t: TrainRecord): "N" | "S" | "E" | "W" | "" => {
+    const raw = ((t.DIRECTION ?? "") + "").toUpperCase().trim();
+    if (raw === "N" || raw.startsWith("NORTH")) return "N";
+    if (raw === "S" || raw.startsWith("SOUTH")) return "S";
+    if (raw === "E" || raw.startsWith("EAST")) return "E";
+    if (raw === "W" || raw.startsWith("WEST")) return "W";
+    return "";
+  };
 
-  const isSouthOrWest = (t: TrainRecord) =>
-    (t.DIRECTION ?? "")
-      .toLowerCase()
-      .includes(color === "green" || color === "blue" ? "west" : "south");
+  const wantsEastWest = color === "blue" || color === "green";
+  const dirALabel = wantsEastWest ? "Eastbound" : "Northbound";
+  const dirBLabel = wantsEastWest ? "Westbound" : "Southbound";
 
-  const filtered = trains.filter((t) => {
-    if (showArriving && !isArriving(t)) return false;
-    if (showScheduled && isArriving(t)) return false;
+  const filtered = useMemo(() => {
+    return trains.filter((t) => {
+      if (showArriving && !isArriving(t)) return false;
+      if (showScheduled && !isScheduled(t)) return false;
 
-    if (direction === "northOrEast" && !isNorthOrEast(t)) return false;
-    if (direction === "southOrEast" && !isSouthOrWest(t)) return false;
+      const d = normDir(t);
 
-    return true;
-  });
+      if (direction === "A") {
+        // A = North/East
+        if (wantsEastWest) return d === "E";
+        return d === "N";
+      }
+      if (direction === "B") {
+        // B = South/West
+        if (wantsEastWest) return d === "W";
+        return d === "S";
+      }
 
-  // togglers
-  function toggleArriving() {
-    setShowArriving((prev) => !prev);
+      return true;
+    });
+  }, [trains, showArriving, showScheduled, direction, wantsEastWest]);
+
+  const onClickArriving = () => {
+    setShowArriving((v) => !v);
     setShowScheduled(false);
-  }
-
-  function toggleScheduled() {
-    setShowScheduled((prev) => !prev);
+  };
+  const onClickScheduled = () => {
+    setShowScheduled((v) => !v);
     setShowArriving(false);
-  }
-
-  function toggleDirection(dir: "northOrEast" | "southOrWest") {
-    setDirection((prev) => (prev === dir ? null : dir));
-  }
+  };
+  const onClickDirA = () => setDirection((d) => (d === "A" ? null : "A"));
+  const onClickDirB = () => setDirection((d) => (d === "B" ? null : "B"));
 
   return (
     <section className="trainlist">
       <div className="filter-bar">
         <button
           className={`chip ${showArriving ? "active" : ""}`}
-          onClick={toggleArriving}
+          onClick={onClickArriving}
         >
           Arriving
         </button>
         <button
           className={`chip ${showScheduled ? "active" : ""}`}
-          onClick={toggleScheduled}
+          onClick={onClickScheduled}
         >
           Scheduled
         </button>
         <button
-          className={`chip ${direction === "northOrEast" ? "active" : ""}`}
-          onClick={() => toggleDirection("northOrEast")}
+          className={`chip ${direction === "A" ? "active" : ""}`}
+          onClick={onClickDirA}
         >
-          {color === "green" || color === "blue" ? "Eastbound" : "Northbound"}
+          {dirALabel}
         </button>
         <button
-          className={`chip ${direction === "northOrEast" ? "active" : ""}`}
-          onClick={() => toggleDirection("northOrEast")}
+          className={`chip ${direction === "B" ? "active" : ""}`}
+          onClick={onClickDirB}
         >
-          {color === "green" || color === "blue" ? "Westbound" : "Southbound"}
+          {dirBLabel}
         </button>
       </div>
 
       <div className="train-list">
         {filtered.length === 0 ? (
-          <div className="empty">No trains to display</div>
+          <div className="empty">No trains match filters</div>
         ) : (
-          trains.map((item, idx) => (
+          filtered.map((item, idx) => (
             <Train key={idx} item={item} color={color} />
           ))
         )}
