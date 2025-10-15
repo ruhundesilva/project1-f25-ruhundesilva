@@ -67,3 +67,12 @@
   color: #444;
   margin-top: 40px;
 }
+
+.sub-status {
+  text-align: center;
+  color: #6b7280; /* gray-500 */
+  font-size: 0.9rem;
+  margin-top: -6px;
+  margin-bottom: 10px;
+  min-height: 1.2em; /* prevents layout jump when text appears/disappears */
+}
