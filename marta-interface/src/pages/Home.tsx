@@ -9,17 +9,27 @@ export default function Home() {
       <header className="home__header">
         <div aria-hidden className="home__spacer" />
         <h1 className="home__brand">MARTA</h1>
-        <Link to="/about" className="home__about">About MARTA</Link>
+        <Link to="/about" className="home__about">
+          About MARTA
+        </Link>
       </header>
 
       <main className="home__main">
         <section className="home__left">
           <h2 className="home__subtitle">VIEW ROUTES SCHEDULE</h2>
           <ul className="home__lines">
-            <li><Link to="/lines?color=gold">Gold Line</Link></li>
-            <li><Link to="/lines?color=red">Red Line</Link></li>
-            <li><Link to="/lines?color=green">Green Line</Link></li>
-            <li><Link to="/lines?color=blue">Blue Line</Link></li>
+            <li>
+              <Link to="/lines/gold">Gold Line</Link>
+            </li>
+            <li>
+              <Link to="/lines/red">Red Line</Link>
+            </li>
+            <li>
+              <Link to="/lines/green">Green Line</Link>
+            </li>
+            <li>
+              <Link to="/lines/blue">Blue Line</Link>
+            </li>
           </ul>
         </section>
 
@@ -34,4 +44,3 @@ export default function Home() {
     </div>
   );
 }
-

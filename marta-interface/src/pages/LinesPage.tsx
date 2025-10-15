@@ -1,18 +1,32 @@
-import React, { useState, useEffect } from "react";
+// src/pages/LinesPage.tsx
+import React, { useEffect, useState } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import NavBar from "../components/Navbar";
 import TrainList from "../components/TrainList";
 import "./LinesPage.css";
 
 type LineColor = "gold" | "red" | "blue" | "green";
+const COLORS: LineColor[] = ["gold", "red", "blue", "green"];
 
 export default function LinesPage() {
-  const [currColor, setCurrColor] = useState<LineColor>("gold");
+  const { color } = useParams();
+  const navigate = useNavigate();
+
+  const currColor: LineColor = COLORS.includes((color || "") as LineColor)
+    ? (color as LineColor)
+    : "gold";
+
+  useEffect(() => {
+    if (!color || !COLORS.includes(color as LineColor)) {
+      navigate("/lines/gold", { replace: true });
+    }
+  }, [color, navigate]);
+
+  // data + ui state
   const [trainData, setTrainData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedStation, setSelectedStation] = useState<string | null>(null); // NEW
-
-  const colors: LineColor[] = ["gold", "red", "blue", "green"];
+  const [selectedStation, setSelectedStation] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchTrains() {
@@ -35,21 +49,18 @@ export default function LinesPage() {
     fetchTrains();
   }, [currColor]);
 
-  // clear selected station when switching lines
-  useEffect(() => setSelectedStation(null), [currColor]);
+  useEffect(() => {
+    setSelectedStation(null);
+  }, [currColor]);
 
   return (
     <div className="lines-page">
       <header className="topbar">
         <div className="line-tabs">
-          {colors.map((c) => (
-            <button
-              key={c}
-              className={`line-tab ${c}`}
-              onClick={() => setCurrColor(c)}
-            >
+          {COLORS.map((c) => (
+            <Link key={c} to={`/lines/${c}`} className={`line-tab ${c}`}>
               {c.toUpperCase()}
-            </button>
+            </Link>
           ))}
         </div>
       </header>
@@ -60,8 +71,7 @@ export default function LinesPage() {
         <div className="loading">Loading train data…</div>
       ) : error ? (
         <div className="loading">
-          Error: {error}{" "}
-          <button onClick={() => setCurrColor((c) => c)}>Retry</button>
+          Error: {error} <Link to={`/lines/${currColor}`}>Retry</Link>
         </div>
       ) : (
         <div className="layout">

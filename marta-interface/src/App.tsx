@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" Component={Home} />
-        <Route path="/lines" Component={LinesPage} />
+        <Route path="/lines/:color" Component={LinesPage} />
         <Route path="/about" Component={About} />
       </Routes>
     </BrowserRouter>
