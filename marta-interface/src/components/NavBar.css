@@ -1,9 +1,9 @@
-
 .navbar {
   background: #282828;
   color: #f0f0f0;
   height: 100%;
   border-right: 1px solid #202020;
+  overflow-y: auto;
 }
 
 .nav-inner {
@@ -13,16 +13,35 @@
 .nav-caption {
   font-size: 14px;
   opacity: 0.9;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .nav-subtle {
   font-size: 13px;
   opacity: 0.75;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
-.nav-blank {
-  height: 520px;
-  background: transparent;
+.station-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #3a3a3a;
+}
+
+.station {
+  padding: 10px 8px;
+  border-bottom: 1px solid #3a3a3a;
+  color: #e6e6e6;
+}
+
+.station:hover {
+  background: #313131;
+  cursor: pointer;
+}
+
+.station.empty {
+  opacity: 0.6;
+  font-style: italic;
+  text-align: center;
 }
