@@ -9,53 +9,34 @@ export default function LinesPage() {
   const [currColor, setCurrColor] = useState<LineColor>("gold");
   const [trainData, setTrainData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [refreshing, setRefreshing] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [refreshMsg, setRefreshMsg] = useState<string | null>(null);
-  const [lastUpdated, setLastUpdated] = useState<number | null>(null);
+  const [selectedStation, setSelectedStation] = useState<string | null>(null); // NEW
 
   const colors: LineColor[] = ["gold", "red", "blue", "green"];
 
-  async function fetchTrains(color: LineColor, useSpinner: boolean) {
-    if (useSpinner) {
+  useEffect(() => {
+    async function fetchTrains() {
       setLoading(true);
       setError(null);
-      setRefreshMsg(null);
-    } else {
-      setRefreshing(true);
-      setRefreshMsg(null);
-    }
-
-    try {
-      const res = await fetch(
-        `https://midsem-bootcamp-api.onrender.com/arrivals/${color}`
-      );
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-
-      setTrainData(Array.isArray(data) ? data : []);
-      setLastUpdated(Date.now());
-      if (!useSpinner) setRefreshMsg(null);
-    } catch (e: any) {
-      if (useSpinner) {
+      try {
+        const res = await fetch(
+          `https://midsem-bootcamp-api.onrender.com/arrivals/${currColor}`
+        );
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        setTrainData(Array.isArray(data) ? data : []);
+      } catch (e: any) {
         setError(e?.message ?? "Failed to fetch train data");
         setTrainData([]);
-      } else {
-        setRefreshMsg("Refresh failed. Will retry automatically.");
+      } finally {
+        setLoading(false);
       }
-    } finally {
-      if (useSpinner) setLoading(false);
-      else setRefreshing(false);
     }
-  }
-
-  useEffect(() => {
-    fetchTrains(currColor, true);
-    const id = setInterval(() => {
-      fetchTrains(currColor, false);
-    }, 30000);
-    return () => clearInterval(id);
+    fetchTrains();
   }, [currColor]);
+
+  // clear selected station when switching lines
+  useEffect(() => setSelectedStation(null), [currColor]);
 
   return (
     <div className="lines-page">
@@ -75,26 +56,26 @@ export default function LinesPage() {
 
       <h1 className="line-title">{currColor.toUpperCase()}</h1>
 
-      <div className="sub-status" aria-live="polite">
-        {refreshing
-          ? "Refreshing…"
-          : lastUpdated
-          ? `Updated ${new Date(lastUpdated).toLocaleTimeString()}`
-          : ""}
-        {refreshMsg ? ` — ${refreshMsg}` : ""}
-      </div>
-
       {loading ? (
         <div className="loading">Loading train data…</div>
       ) : error ? (
         <div className="loading">
           Error: {error}{" "}
-          <button onClick={() => fetchTrains(currColor, true)}>Retry</button>
+          <button onClick={() => setCurrColor((c) => c)}>Retry</button>
         </div>
       ) : (
         <div className="layout">
-          <NavBar color={currColor} data={trainData} />
-          <TrainList color={currColor} data={trainData} />
+          <NavBar
+            color={currColor}
+            data={trainData}
+            selectedStation={selectedStation}
+            onSelectStation={setSelectedStation}
+          />
+          <TrainList
+            color={currColor}
+            data={trainData}
+            selectedStation={selectedStation}
+          />
         </div>
       )}
     </div>

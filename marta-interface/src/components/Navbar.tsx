@@ -1,16 +1,32 @@
 import React, { useMemo } from "react";
 import "./NavBar.css";
 
-type Props = { color: string; data: any[] };
+type Props = {
+  color: string;
+  data: any[];
+  selectedStation: string | null;
+  onSelectStation: (station: string | null) => void;
+};
 
-export default function NavBar({ color, data }: Props) {
+export default function NavBar({
+  color,
+  data,
+  selectedStation,
+  onSelectStation,
+}: Props) {
   const stations = useMemo(() => {
     const names = new Set<string>();
     (Array.isArray(data) ? data : []).forEach((t) => {
-      if (t.STATION) names.add(t.STATION.toString().trim());
+      if (t?.STATION) names.add(String(t.STATION).trim());
     });
     return Array.from(names).sort((a, b) => a.localeCompare(b));
   }, [data]);
+
+  const allStations = ["All Stations", ...stations];
+
+  function handleClick(name: string) {
+    onSelectStation(name === "All Stations" ? null : name);
+  }
 
   return (
     <aside className="navbar">
@@ -19,17 +35,20 @@ export default function NavBar({ color, data }: Props) {
         <div className="nav-subtle">({color.toUpperCase()} line)</div>
 
         <ul className="station-list">
-          {stations.length === 0 ? (
-            <li className="station empty">No Stations Found</li>
-          ) : stations.length === 0 ? (
-            <li className="station empty">No Stations Found</li>
-          ) : (
-            stations.map((s) => (
-              <li className="station" key={s}>
+          {allStations.map((s) => {
+            const active =
+              (selectedStation == null && s === "All Stations") ||
+              selectedStation === s;
+            return (
+              <li
+                key={s}
+                className={`station${active ? " active" : ""}`}
+                onClick={() => handleClick(s)}
+              >
                 {s}
               </li>
-            ))
-          )}
+            );
+          })}
         </ul>
       </div>
     </aside>

@@ -5,9 +5,10 @@ import Train, { type TrainRecord } from "./Train";
 type Props = {
   color: "gold" | "red" | "blue" | "green";
   data: any[];
+  selectedStation: string | null; // new
 };
 
-export default function TrainList({ color, data }: Props) {
+export default function TrainList({ color, data, selectedStation }: Props) {
   const trains: TrainRecord[] = Array.isArray(data)
     ? (data as TrainRecord[])
     : [];
@@ -39,25 +40,34 @@ export default function TrainList({ color, data }: Props) {
 
   const filtered = useMemo(() => {
     return trains.filter((t) => {
+      if (
+        selectedStation &&
+        (t.STATION ?? "").toString().trim() !== selectedStation
+      ) {
+        return false;
+      }
+
       if (showArriving && !isArriving(t)) return false;
       if (showScheduled && !isScheduled(t)) return false;
 
       const d = normDir(t);
-
       if (direction === "A") {
-        // A = North/East
-        if (wantsEastWest) return d === "E";
-        return d === "N";
+        return wantsEastWest ? d === "E" : d === "N";
       }
       if (direction === "B") {
-        // B = South/West
-        if (wantsEastWest) return d === "W";
-        return d === "S";
+        return wantsEastWest ? d === "W" : d === "S";
       }
 
       return true;
     });
-  }, [trains, showArriving, showScheduled, direction, wantsEastWest]);
+  }, [
+    trains,
+    selectedStation,
+    showArriving,
+    showScheduled,
+    direction,
+    wantsEastWest,
+  ]);
 
   const onClickArriving = () => {
     setShowArriving((v) => !v);

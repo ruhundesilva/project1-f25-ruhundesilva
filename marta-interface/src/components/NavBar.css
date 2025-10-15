@@ -45,3 +45,8 @@
   font-style: italic;
   text-align: center;
 }
+
+.station.active {
+  background: #373737;
+  font-weight: 800;
+}
