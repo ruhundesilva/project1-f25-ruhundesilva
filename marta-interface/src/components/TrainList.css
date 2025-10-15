@@ -31,3 +31,9 @@
   color: #666;
   padding: 24px 0;
 }
+
+.chip.active {
+  background: #222;
+  color: #fff;
+  border-color: #222;
+}
