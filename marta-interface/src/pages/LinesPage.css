@@ -1,11 +1,9 @@
-/* page background should be light, not dark */
 .lines-page {
   background: #ffffff;
   min-height: 100vh;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-/* top white bar with centered buttons */
 .topbar {
   background: #ffffff;
   border-bottom: 1px solid #e5e5e5;
@@ -19,7 +17,6 @@
   gap: 24px;
 }
 
-/* color buttons look like the screenshots: flat, bold, rounded */
 .line-tab {
   appearance: none;
   border: 0;
@@ -47,7 +44,6 @@
   color: #fff;
 }
 
-/* big centered title like the mock */
 .line-title {
   font-size: 44px;
   font-weight: 900;
@@ -57,11 +53,17 @@
   margin: 16px 0 10px;
 }
 
-/* two-column layout: dark nav + content */
 .layout {
   display: grid;
-  grid-template-columns: 280px 1fr; /* sidebar width similar to screenshot */
+  grid-template-columns: 280px 1fr;
   gap: 0;
   align-items: start;
   padding: 0 16px 24px;
+}
+
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #444;
+  margin-top: 40px;
 }

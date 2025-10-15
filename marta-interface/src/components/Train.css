@@ -1,0 +1,79 @@
+.train-row {
+  display: grid;
+  grid-template-columns: 56px 1fr 100px;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 12px;
+  border-top: 2px solid #222;
+  border-bottom: 2px solid #222;
+  background: #fff;
+}
+
+.train-logo {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.train-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.train-title {
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.arrow {
+  opacity: 0.6;
+}
+
+.train-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.pill {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #eee;
+}
+
+.pill.gold {
+  background: #f2c319;
+  color: #111;
+}
+.pill.red {
+  background: #e31919;
+  color: #fff;
+}
+.pill.blue {
+  background: #2e47ff;
+  color: #fff;
+}
+.pill.green {
+  background: #0f7f1e;
+  color: #fff;
+}
+
+.status.ok {
+  color: #0f7f1e;
+  font-weight: 700;
+}
+.status.late {
+  color: #e31919;
+  font-weight: 700;
+}
+
+.train-eta {
+  text-align: right;
+  font-weight: 800;
+  color: #198754;
+}
