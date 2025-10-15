@@ -57,18 +57,18 @@ For this project, we are calling this URL: "<https://midsem-bootcamp-api.onrende
 
 To get data for stations, you can use "<https://midsem-bootcamp-api.onrender.com/stations/{LINE_COLOR}>"; for example, to get the stations from the gold line, you can call "<https://midsem-bootcamp-api.onrender.com/stations/gold>".
 
-*Important note:* Previously, we learned how to call from an API using fetch(); however, React can have issues with rendering using fetch as if the called data has not arrived yet but is being asked to be displayed there will be an issue. To handle this we will incorporate useEffect()! We will have two states added to LinesPage.tsx: loading and data, dafaultly set to true and null. Then, we will add useEffect() below like so (where the line in the URL is a variable that changes based on the current state of the line from the line buttons):
+_Important note:_ Previously, we learned how to call from an API using fetch(); however, React can have issues with rendering using fetch as if the called data has not arrived yet but is being asked to be displayed there will be an issue. To handle this we will incorporate useEffect()! We will have two states added to LinesPage.tsx: loading and data, dafaultly set to true and null. Then, we will add useEffect() below like so (where the line in the URL is a variable that changes based on the current state of the line from the line buttons):
 
 ```tsx
 //ADD MORE CODE TO ACCOUNT FOR LOADING
 useEffect(() => {
-        fetch("[URL]")
-        .then(response => response.tsxon())
-        .then(data => setData(data))
-      },[])
+  fetch("[URL]")
+    .then((response) => response.tsxon())
+    .then((data) => setData(data));
+}, []);
 ```
 
-*Another important note:* When calling the API, there might me some periods of time when it is down, meaning you might get a 'Fetch Error' even when your fetched URL is correct. Please wait 15-30 seconds before attempting to fetch again. This is due to our hosting server being on a free tier 😔. If you still receive an error after waiting, please look at your code to see if there are any errors in the URL you are fetching!
+_Another important note:_ When calling the API, there might me some periods of time when it is down, meaning you might get a 'Fetch Error' even when your fetched URL is correct. Please wait 15-30 seconds before attempting to fetch again. This is due to our hosting server being on a free tier 😔. If you still receive an error after waiting, please look at your code to see if there are any errors in the URL you are fetching!
 
 ### More filtering
 
@@ -124,3 +124,7 @@ These are just example designs for this project! You can follow these designs as
 ### HOME
 
 <img src="https://github.com/BoG-Dev-Bootcamp-F25/project1-f25/blob/main/assets/home_page.png" alt="Example of Home Page" width="500"></img>
+
+## Video Link
+
+- https://youtu.be/6Xri847CIbA
